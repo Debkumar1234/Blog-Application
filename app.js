@@ -1,12 +1,14 @@
 import express from "express";
 import path from "path";
 import { title } from "process";
+import bodyParser from "body-parser";
 
 const app = express();
 const port = 3000;
 
 // Set up middleware
 app.use(express.static("public"));
+app.use(bodyParser.urlencoded({ extended: true })); // Parse URL-encoded bodies
 
 // Set up EJS as the templating engine
 app.set("view engine", "ejs");
@@ -128,12 +130,49 @@ let blogs = [
   },
 ];
 
+// Redirect root to /blogs
 app.get("/", (req, res) => {
   res.redirect('/blogs');
 });
 
+// Route to render the blogs page
+// This will render the index.ejs file located in the views directory
 app.get("/blogs", (req, res) => {
   res.render("index", { title : 'All Blogs', blogs }); // Pass the blogs array to the EJS template
+});
+
+
+// New blog route
+app.get("/blogs/new", (req, res) => {
+  res.render("create", { title: 'Create New Blog' }); // Render the new blog form
+});
+
+
+// Create a new blog
+app.post("/blogs", (req, res) => {
+  const { title, snippet, body } = req.body; // Destructure the request body
+  const newBlog = {
+    id: blogs.length + 1, // Simple ID generation
+    title: title,
+    snippet: snippet,
+    body: body,
+    createdAt: new Date().toISOString(),
+  };
+  blogs.push(newBlog); // Add the new blog to the blogs array
+  res.redirect("/blogs"); // Redirect to the blogs page after creating a new blog 
+});
+
+// Route to render a specific blog post
+app.get("/blogs/:id", (req, res) => { 
+  console.log(req.params.id); // Log the blog ID from the URL
+  // Find the blog by ID
+  const blogId = parseInt(req.params.id, 10); // Get the blog ID from the URL
+  const blog = blogs.find(b => b.id === blogId); // Find the blog by ID
+  if (blog) {
+    res.render("details", { title: blog.title, blog }); // Render the blog page with the found blog
+  } else {
+    res.status(404).render('404', {title : 'Blog Not Found'}); // Handle case where blog is not found
+  }
 });
 
 app.listen(port, () => {
