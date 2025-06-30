@@ -1,5 +1,6 @@
 import express from "express";
 import path from "path";
+import { title } from "process";
 
 const app = express();
 const port = 3000;
@@ -128,7 +129,11 @@ let blogs = [
 ];
 
 app.get("/", (req, res) => {
-  res.render("index");
+  res.redirect('/blogs');
+});
+
+app.get("/blogs", (req, res) => {
+  res.render("index", { title : 'All Blogs', blogs }); // Pass the blogs array to the EJS template
 });
 
 app.listen(port, () => {

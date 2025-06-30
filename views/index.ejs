@@ -1,10 +1,39 @@
 <%- include("./partials/header.ejs") %>
 
+  <section class="blogs-header">
+    <h2>All Blog Posts</h2>
+    <a href="/blogs/new">New Blog</a>
+  </section>
 
-  <h1>Welcome to SimpleBlog</h1>
-  <p>Your go-to platform for sharing thoughts and ideas.</p>
-  <div class="blog-list">
-    History of the blog will be displayed here.
-  </div>
+  <section class="blog-list">
+    <% if (blogs.length> 0) { %>
+      <% blogs.forEach(blog=> { %>
+        <article class="blog-card">
+          <h3><a href="/blogs/<%= blog.id %>">
+              <%= blog.title %>
+            </a></h3>
+          <p>
+            <%= blog.snippet %>
+          </p>
+          <div class="blog-meta">
+            <span class="date">
+              <%= new Date(blog.createdAt).toLocaleDateString() %>
+            </span>
+            <div class="blog-actions">
+              <a href="/blogs/<%= blog.id %>">Read More</a>
+              <a href="/blogs/<%= blog.id %>">Edit</a>
+              <form action="/blogs/<%= blog.id %>?_method=DELETE" method="POST" class="delete-form">
+                <button type="submit">Delete</button>
+              </form>
+            </div>
+          </div>
+        </article>
+        <% }) %>
+          <% } else { %>
+            <p>No blogs available. Please create a new blog post.</p>
+            <a href="/blogs/new">Create Your First Blog</a>
+            <% } %>
+  </section>
+
 
   <%- include("./partials/footer.ejs") %>
