@@ -204,6 +204,18 @@ app.put("/blogs/:id", (req, res) => {
   }
 });
 
+// Delete a blog
+app.delete("/blogs/:id", (req, res) => {
+  const blogId = req.params.id; // Get the blog ID from the URL
+  const blogIndex = blogs.findIndex((b) => b.id === blogId); // Find the index of the blog by ID
+  if (blogIndex !== -1) {
+    blogs.splice(blogIndex, 1); // Remove the blog from the array
+    res.redirect("/blogs"); // Redirect to the blogs page after deletion
+  } else {
+    res.status(404).render("404", { title: "Blog Not Found" }); // Handle case where blog is not found
+  }
+});
+
 app.listen(port, () => {
   console.log(`Server is listening at http://localhost:${port}`);
 });
