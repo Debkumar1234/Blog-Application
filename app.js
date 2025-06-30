@@ -2,6 +2,7 @@ import express from "express";
 import path from "path";
 import methodOverride from "method-override"; // Importing method-override to handle PUT and DELETE requests in forms
 import bodyParser from "body-parser";
+import { v4 as uuidv4 } from 'uuid';
 
 const app = express();
 const port = 3000;
@@ -17,7 +18,7 @@ app.set("views", path.join(path.resolve(), "views"));
 
 let blogs = [
   {
-    id: 1,
+    id: uuidv4(), // Using uuid for unique IDs
     title: "Getting Started with Node.js",
     snippet:
       "Node.js is a JavaScript runtime built on Chrome's V8 JavaScript engine.",
@@ -25,7 +26,7 @@ let blogs = [
     createdAt: new Date().toISOString(),
   },
   {
-    id: 2,
+    id: uuidv4(),
     title: "Express.js Fundamentals",
     snippet:
       "Express is a minimal and flexible Node.js web application framework.",
@@ -33,7 +34,7 @@ let blogs = [
     createdAt: new Date().toISOString(),
   },
   {
-    id: 3,
+    id: uuidv4(),
     title: "EJS Templating",
     snippet:
       "EJS is a simple templating language that lets you generate HTML markup with plain JavaScript.",
@@ -41,7 +42,7 @@ let blogs = [
     createdAt: new Date().toISOString(),
   },
   {
-    id: 4,
+    id: uuidv4(),
     title: "Understanding Middleware in Express",
     snippet:
       "Middleware functions are functions that have access to the request object, the response object, and the next middleware function.",
@@ -49,14 +50,14 @@ let blogs = [
     createdAt: new Date().toISOString(),
   },
   {
-    id: 5,
+    id: uuidv4(),
     title: "Building RESTful APIs with Node.js",
     snippet: "Learn how to build RESTful APIs using Node.js and Express.",
     body: "RESTful APIs are a standard way to build web services. In this blog, we will explore how to create a RESTful API using Node.js and Express, covering routing, request handling, and response formatting.",
     createdAt: new Date().toISOString(),
   },
   {
-    id: 6,
+    id: uuidv4(),
     title: "Introduction to MongoDB",
     snippet:
       "MongoDB is a NoSQL database that uses a document-oriented data model.",
@@ -64,7 +65,7 @@ let blogs = [
     createdAt: new Date().toISOString(),
   },
   {
-    id: 7,
+    id: uuidv4(),
     title: "Using Mongoose for MongoDB",
     snippet:
       "Mongoose is an ODM (Object Data Modeling) library for MongoDB and Node.js.",
@@ -72,7 +73,7 @@ let blogs = [
     createdAt: new Date().toISOString(),
   },
   {
-    id: 8,
+    id: uuidv4(),
     title: "Error Handling in Express",
     snippet:
       "Learn how to handle errors in your Express applications effectively.",
@@ -80,49 +81,49 @@ let blogs = [
     createdAt: new Date().toISOString(),
   },
   {
-    id: 9,
+    id: uuidv4(),
     title: "Authentication in Node.js",
     snippet: "Implementing authentication in your Node.js applications.",
     body: "Authentication is crucial for securing your applications. In this blog, we will explore different authentication strategies in Node.js, including session-based and token-based authentication.",
     createdAt: new Date().toISOString(),
   },
   {
-    id: 10,
+    id: uuidv4(),
     title: "Deploying Node.js Applications",
     snippet: "A guide to deploying your Node.js applications to production.",
     body: "Deploying your Node.js application can be challenging. This blog will provide a step-by-step guide on how to deploy your application using popular platforms like Heroku and AWS.",
     createdAt: new Date().toISOString(),
   },
   {
-    id: 11,
+    id: uuidv4(),
     title: "WebSockets in Node.js",
     snippet: "Real-time communication with WebSockets in Node.js.",
     body: "WebSockets allow for real-time communication between the client and server. In this blog, we will explore how to implement WebSockets in a Node.js application using the Socket.io library.",
     createdAt: new Date().toISOString(),
   },
   {
-    id: 12,
+    id: uuidv4(),
     title: "Unit Testing in Node.js",
     snippet: "Learn how to write unit tests for your Node.js applications.",
     body: "Unit testing is essential for maintaining code quality. This blog will cover how to set up a testing environment in Node.js using frameworks like Mocha and Chai.",
     createdAt: new Date().toISOString(),
   },
   {
-    id: 13,
+    id: uuidv4(),
     title: "Using TypeScript with Node.js",
     snippet: "Enhance your Node.js applications with TypeScript.",
     body: "TypeScript is a superset of JavaScript that adds static typing. In this blog, we will discuss how to set up TypeScript in a Node.js project and the benefits it brings to your development process.",
     createdAt: new Date().toISOString(),
   },
   {
-    id: 14,
+    id: uuidv4(),
     title: "GraphQL vs REST",
     snippet: "Comparing GraphQL and REST for API development.",
     body: "GraphQL is an alternative to REST for building APIs. This blog will compare the two approaches, discussing their advantages and disadvantages, and when to use each.",
     createdAt: new Date().toISOString(),
   },
   {
-    id: 15,
+    id: uuidv4(),
     title: "Performance Optimization in Node.js",
     snippet:
       "Tips and techniques for optimizing the performance of your Node.js applications.",
@@ -151,7 +152,7 @@ app.get("/blogs/new", (req, res) => {
 app.post("/blogs", (req, res) => {
   const { title, snippet, body } = req.body; // Destructure the request body
   const newBlog = {
-    id: blogs.length + 1, // Simple ID generation
+    id: uuidv4(), // Simple ID generation
     title: title,
     snippet: snippet,
     body: body,
@@ -163,9 +164,7 @@ app.post("/blogs", (req, res) => {
 
 // Route to render a specific blog post
 app.get("/blogs/:id", (req, res) => {
-  console.log(req.params.id); // Log the blog ID from the URL
-  // Find the blog by ID
-  const blogId = parseInt(req.params.id, 10); // Get the blog ID from the URL
+  const blogId = req.params.id; // Get the blog ID from the URL
   const blog = blogs.find((b) => b.id === blogId); // Find the blog by ID
   if (blog) {
     res.render("details", { title: blog.title, blog }); // Render the blog page with the found blog
@@ -176,7 +175,7 @@ app.get("/blogs/:id", (req, res) => {
 
 // Route to handle edit blog requests
 app.get("/blogs/:id/edit", (req, res) => {
-  const blogId = parseInt(req.params.id, 10); // Get the blog ID from the URL
+  const blogId = req.params.id; // Get the blog ID from the URL
   const blog = blogs.find((b) => b.id === blogId); // Find the blog by ID
   if (blog) {
     res.render("edit", { title: `Edit ${blog.title}`, blog }); // Render the edit form with the found blog
@@ -187,7 +186,7 @@ app.get("/blogs/:id/edit", (req, res) => {
 
 // Update a blog
 app.put("/blogs/:id", (req, res) => {
-  const blogId = parseInt(req.params.id, 10); // Get the blog ID from the URL
+  const blogId = req.params.id; // Get the blog ID from the URL
   const { title, snippet, body } = req.body; // Destructure the request body
   const blogIndex = blogs.findIndex((b) => b.id === blogId); // Find the index of the blog by ID
   if (blogIndex !== -1) {
