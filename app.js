@@ -1,9 +1,15 @@
 import express from "express";
+import path from "path";
+
 const app = express();
 const port = 3000;
 
+// Set up middleware
+app.use(express.static("public"));
+
+// Set up EJS as the templating engine
 app.set("view engine", "ejs");
-app.set("views", "./views");
+app.set("views", path.join(path.resolve(), "views"));
 
 let blogs = [
   {
