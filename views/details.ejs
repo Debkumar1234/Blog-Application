@@ -1,0 +1,35 @@
+<%- include('./partials/header.ejs') %>
+
+    <div class="blog-details">
+        <div class="blog-header">
+            <h2>
+                <%= blog.title %>
+            </h2>
+            <div class="blog-meta">
+                <span class="date">
+                    <%= new Date(blog.createdAt).toLocaleDateString() %>
+                </span>
+            </div>
+        </div>
+        <div class="blog-content">
+            <p class="snippet"><em>
+                    <%= blog.snippet %>
+                </em></p>
+            <div class="body">
+                <p>
+                    <%= blog.body %>
+                </p>
+            </div>
+        </div>
+        <div class="blog-actions">
+            <a href="/blogs">Back to Blogs</a>
+            <div class="action-buttons">
+                <a href="/blogs/<%= blog.id %>/edit" class="edit-button">Edit</a>
+                <form action="/blogs/<%= blog.id %>?_method=DELETE" method="POST" class="delete-form">
+                    <button type="submit" class="delete-button">Delete</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <%- include('./partials/footer.ejs') %>
