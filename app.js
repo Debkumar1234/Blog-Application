@@ -3,6 +3,7 @@ import path from "path";
 import methodOverride from "method-override"; // Importing method-override to handle PUT and DELETE requests in forms
 import bodyParser from "body-parser";
 import { v4 as uuidv4 } from 'uuid';
+import morgan from 'morgan'; // Importing morgan for logging HTTP requests
 
 const app = express();
 const port = 3000;
@@ -11,6 +12,7 @@ const port = 3000;
 app.use(express.static("public"));
 app.use(bodyParser.urlencoded({ extended: true })); // Parse URL-encoded bodies
 app.use(methodOverride("_method"));
+app.use(morgan('dev')); // Logging middleware for development
 
 // Set up EJS as the templating engine
 app.set("view engine", "ejs");
@@ -214,6 +216,11 @@ app.delete("/blogs/:id", (req, res) => {
   } else {
     res.status(404).render("404", { title: "Blog Not Found" }); // Handle case where blog is not found
   }
+});
+
+// 404 page
+app.use((req, res) => {
+  res.status(404).render('404', { title: '404 Not Found' });
 });
 
 app.listen(port, () => {
