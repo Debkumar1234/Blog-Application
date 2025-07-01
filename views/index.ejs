@@ -2,7 +2,7 @@
 
   <section class="blogs-header">
     <h2>All Blog Posts</h2>
-    <a href="/blogs/new">New Blog</a>
+    <a href="/blogs/new" class="btn new">New Blog</a>
   </section>
 
   <section class="blog-list">
@@ -16,14 +16,14 @@
             <%= blog.snippet %>
           </p>
           <div class="blog-meta">
-            <span class="date">
+            <span class="date"><i class="far fa-calendar-alt"></i>
               <%= new Date(blog.createdAt).toLocaleDateString() %>
             </span>
             <div class="blog-actions">
-              <a href="/blogs/<%= blog.id %>">Read More</a>
-              <a href="/blogs/<%= blog.id %>/edit">Edit</a>
+              <a href="/blogs/<%= blog.id %>" class="btn read-more">Read More</a>
+              <a href="/blogs/<%= blog.id %>/edit" class="btn edit"><i class="fas fa-edit"></i></a>
               <form action="/blogs/<%= blog.id %>?_method=DELETE" method="POST" class="delete-form">
-                <button type="submit">Delete</button>
+                <button type="submit" class="btn"><i class="fas fa-trash"></i></button>
               </form>
             </div>
           </div>
