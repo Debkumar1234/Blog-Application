@@ -2,7 +2,6 @@
 
   <section class="blogs-header">
     <h2>All Blog Posts</h2>
-    <a href="/blogs/new" class="btn new"><i class="fas fa-plus"></i>New Blog</a>
   </section>
 
   <section class="blog-list">
@@ -12,19 +11,19 @@
           <h3><a href="/blogs/<%= blog.id %>">
               <%= blog.title %>
             </a></h3>
-          <p>
+          <p class="snippet">
             <%= blog.snippet %>
           </p>
           <div class="blog-meta">
             <span class="date"><i class="far fa-calendar-alt"></i>
               <%= new Date(blog.createdAt).toLocaleDateString() %>
             </span>
-            <div class="blog-actions">
-              <a href="/blogs/<%= blog.id %>" class="btn read-more">Read More</a>
+            <div class="blogs-actions">
+              <a href="/blogs/<%= blog.id %>" class="btn read-more"><span style="padding-bottom: 3px;">Read More</span></a>
               <a href="/blogs/<%= blog.id %>/edit" class="btn edit"><i class="fas fa-edit"></i></a>
-              <form action="/blogs/<%= blog.id %>?_method=DELETE" method="POST" class="delete-form">
-                <button type="submit" class="btn delete"><i class="fas fa-trash"></i></button>
-              </form>
+              <a href="/blogs/a5190b18-070e-4338-a7ea-817dd61bebd3?_method=DELETE" class="btn delete">
+                <i class="fas fa-trash"></i>
+              </a>
             </div>
           </div>
         </article>
@@ -34,6 +33,9 @@
             <a href="/blogs/new">Create Your First Blog</a>
             <% } %>
   </section>
+
+    <a href="/blogs/new" class="btn new" style="width: fit-content; position: absolute; right: 1rem; margin: 3rem 2rem;"><i class="fas fa-plus"></i>New Blog</a>
+
 
 
   <%- include("./partials/footer.ejs") %>
