@@ -21,9 +21,9 @@
             <div class="blogs-actions">
               <a href="/blogs/<%= blog.id %>" class="btn read-more"><span style="padding-bottom: 3px;">Read More</span></a>
               <a href="/blogs/<%= blog.id %>/edit" class="btn edit"><i class="fas fa-edit"></i></a>
-              <a href="/blogs/a5190b18-070e-4338-a7ea-817dd61bebd3?_method=DELETE" class="btn delete">
-                <i class="fas fa-trash"></i>
-              </a>
+              <form action="/blogs/<%= blog.id %>?_method=DELETE" method="POST" class="delete-form">
+                    <button type="submit" class="delete btn"><i class="fas fa-trash"></i></button>
+                </form>
             </div>
           </div>
         </article>
