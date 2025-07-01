@@ -2,7 +2,7 @@
 
   <section class="blogs-header">
     <h2>All Blog Posts</h2>
-    <a href="/blogs/new" class="btn new">New Blog</a>
+    <a href="/blogs/new" class="btn new"><i class="fas fa-plus"></i>New Blog</a>
   </section>
 
   <section class="blog-list">
@@ -23,7 +23,7 @@
               <a href="/blogs/<%= blog.id %>" class="btn read-more">Read More</a>
               <a href="/blogs/<%= blog.id %>/edit" class="btn edit"><i class="fas fa-edit"></i></a>
               <form action="/blogs/<%= blog.id %>?_method=DELETE" method="POST" class="delete-form">
-                <button type="submit" class="btn"><i class="fas fa-trash"></i></button>
+                <button type="submit" class="btn delete"><i class="fas fa-trash"></i></button>
               </form>
             </div>
           </div>
