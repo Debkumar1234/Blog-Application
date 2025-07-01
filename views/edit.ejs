@@ -16,8 +16,8 @@
             <textarea id="body" name="body" rows="5" required><%= blog.body %></textarea>
         </div>
         <div class="form-actions">
-            <a href="/blogs/<%= blog.id %>">Cancel</a>
-            <button type="submit">Update Blog</button>
+            <a href="/blogs/<%= blog.id %>" class="delete btn" style="padding-bottom: 11px;">Cancel</a>
+            <button type="submit" class="btn edit">Update Blog</button>
         </div>
     </form>
         
